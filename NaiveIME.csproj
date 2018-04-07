@@ -104,7 +104,6 @@
     <Compile Include="TrainingModel\NGramGeneral.cs" />
     <Compile Include="TrainingModel\NGramBase.cs" />
     <Compile Include="Utility\ModelLoader.cs" />
-    <Compile Include="TrainingModel\NGramN.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Preprocessor\DatasetConverter.cs" />
