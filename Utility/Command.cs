@@ -151,7 +151,7 @@ namespace NaiveIME
             IEnumerable<NGramBase> models;
             models = opt.ModelNames.Select(ModelLoader.LoadByName);
             var inputers = models.Select(model => new NGramInputMethod(model)).Cast<SingleCharInputMethod >().ToArray();
-            var tester = new InputerTester(inputers);
+            var tester = new InputMethodTester(inputers);
 
             using (var inputFile = File.OpenText(opt.InputFile))
             {
