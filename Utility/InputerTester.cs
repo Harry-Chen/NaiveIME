@@ -38,7 +38,7 @@ namespace NaiveIME
 		    return new SentenseCompare(sentense, result);
 		}
 
-		public void TestData(TextReader reader, TextWriter resultWriter = null, string format = "chinese_only")
+		public void TestData(TextReader reader, TextWriter resultWriter = null)
 		{
 		    resultWriter?.WriteLine("----- Inputer Test Report -----");
 		    for(int i=0; i<Inputers.Length; ++i)
@@ -49,23 +49,8 @@ namespace NaiveIME
 		    IEnumerable<string> pinyins;
 			for (int i=0; reader.Peek() != -1; ++i)
 			{
-			    if (format == "pinyin_chinese")
-			    {
-                    pinyins = reader.ReadLine().Trim().ToLower().Split(' ');
-			        chinese = reader.ReadLine().Trim();
-			    }
-			    else if(format == "chinese_only")
-			    {
-                    chinese = reader.ReadLine().Trim();
-			        if(chinese == "")
-			            continue;
-			        pinyins = chinese.Select(c => PinyinDict.ConvertCharToPinyin(c).FirstOrDefault())
-			                        .Where(s => s != null);
-			    }
-			    else
-			    {
-			        throw new ArgumentException(nameof(format));
-			    }
+                pinyins = reader.ReadLine().Trim().ToLower().Split(' ');
+		        chinese = reader.ReadLine().Trim();
 			    var cmps = new SentenseCompareMultiple(chinese);
 			    foreach (var inputer in Inputers)
 			    {
@@ -82,13 +67,6 @@ namespace NaiveIME
 		    for(int i=0; i<Inputers.Length; ++i)
 			    resultWriter?.WriteLine($"{i}: {Results[Inputers[i]]}");
 		}
-
-		//string ToPinyin(string sentense)
-		//{
-		//	var pinyins = sentense.Select(c => PinyinDict.GetPinyins(c).FirstOrDefault())
-		//	                      .Where(s => s != "");
-		//	return string.Join(" ", pinyins);
-		//}
 
 		public class SentenseCompare
 		{

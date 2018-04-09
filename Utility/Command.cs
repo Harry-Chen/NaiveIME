@@ -7,7 +7,7 @@ namespace NaiveIME
 {
     static class Command
     {
-        public static void Analyze(AnalyzeOption opt)
+        public static void AnalyzeRawTextFiles(AnalyzeOption opt)
         {
             TextProcessor.MinRate = opt.MinRate;
             TextProcessor.Strategy = opt.Strategy;
@@ -17,7 +17,7 @@ namespace NaiveIME
                 TextProcessor.AnalyzeFilesSeparately(opt.FilePaths, opt.OutputDir);
         }
 
-        public static void ConvStat(ConvStatOption opt)
+        public static void ConvertDatasetToStatistics(ConvStatOption opt)
         {
             if (opt.Merge)
             {
@@ -39,13 +39,13 @@ namespace NaiveIME
             }
         }
 
-        public static void Merge(IEnumerable<string> filePaths, string outputFile, float rate = 0)
+        public static void MergeStatisticsFiles(IEnumerable<string> filePaths, string outputFile, float rate = 0)
         {
             TextProcessor.MinRate = rate;
             TextProcessor.MergeFiles(filePaths, outputFile);
         }
 
-        public static void Solve(string inputFile, string outputFile, string modelName = "n")
+        public static void SolveFromFile(string inputFile, string outputFile, string modelName)
         {
             var model = ModelLoader.LoadByName(modelName);
             var inputer = new NGramInputMethod(model);
@@ -61,7 +61,7 @@ namespace NaiveIME
             }
         }
 
-        public static void QSolve(string modelName = "n")
+        public static void InteractiveSolve(string modelName)
         {
             NGramBase model = ModelLoader.LoadByName(modelName);
             var inputer = new NGramInputMethod(model)
@@ -72,16 +72,13 @@ namespace NaiveIME
 
             while (true)
             {
-                Console.Write("input > ");
+                Console.Write("pinyin > ");
                 var input = Console.ReadLine();
                 try
                 {
                     inputer.Clear();
                     foreach (string pinyin in input.Split())
                         inputer.Input(pinyin);
-                    //Console.WriteLine("SubResults:");
-                    //foreach (var result in inputer.SubResult.Take(5))
-                    //	Console.WriteLine("  " + result);
                     Console.WriteLine(inputer.Results.First());
                 }
                 catch (Exception e)
@@ -91,12 +88,11 @@ namespace NaiveIME
             }
         }
 
-        public static void QModel(string modelName)
+        public static void QueryModel()
         {
             NGramBase ng1 = ModelLoader.Load<NGram1>();
             NGramBase ng2 = ModelLoader.Load<NGram2>();
             NGramBase ng3 = ModelLoader.Load<NGram3>();
-            //NGramBase ngn = ModelLoader.Load<NGramN>();
 
             while (true)
             {
@@ -113,8 +109,6 @@ namespace NaiveIME
                     ng2.GetDistribution(condition).Take(5).Print();
                     Console.WriteLine("3-gram");
                     ng3.GetDistribution(condition).Take(5).Print();
-                    //Console.WriteLine("n-gram");
-                    //ngn.GetDistribution(condition).Take(5).Print();
                 }
                 catch (Exception e)
                 {
@@ -124,7 +118,7 @@ namespace NaiveIME
             }
         }
 
-        public static void QStatistic(string filePath)
+        public static void QueryStatistics(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -162,10 +156,10 @@ namespace NaiveIME
             using (var inputFile = File.OpenText(opt.InputFile))
             {
                 if (opt.OutputFile == null)
-                    tester.TestData(inputFile, Console.Out, opt.Format);
+                    tester.TestData(inputFile, Console.Out);
                 else
                     using (var outputFile = File.CreateText(opt.OutputFile))
-                        tester.TestData(inputFile, outputFile, opt.Format);
+                        tester.TestData(inputFile, outputFile);
             }
         }
     }

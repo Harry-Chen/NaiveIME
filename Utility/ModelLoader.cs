@@ -32,21 +32,11 @@ namespace NaiveIME
 				case "1": return Load<NGram1>();
 				case "2": return Load<NGram2>();
 				case "3": return Load<NGram3>();
-				case "12m": return Load12_MaxN();
-				case "12l": return Load12_Lambda();
-				case "123l": return Load123_Lambda();
-				//case "n": return Load<NGramN>();
+				case "12m": return Load12WithMaxProbability();
+				case "12l": return Load12WithCoefficients();
+				case "123l": return Load123WithCoefficients();
 				default: throw new ArgumentException();
 			}
-			//var type = Type.GetType(modelName);
-			//object model;
-			//using (var fileReader = File.OpenText(GetPath(type)))
-			//{
-			//	Console.WriteLine($"Loading {modelName} from file...");
-			//	model = new JsonSerializer().Deserialize(fileReader, type);
-			//	Console.WriteLine($"Success.");
-			//}
-			//return model as NGramModelBase;
 		}
 
 		public static TModel Load<TModel> ()
@@ -73,7 +63,7 @@ namespace NaiveIME
 	        }
 	    }
 
-	    public static NGramMixed Load12_MaxN()
+	    public static NGramMixed Load12WithMaxProbability()
 		{
 			var ng1 = Load<NGram1>();
 			var ng2 = Load<NGram2>();
@@ -82,7 +72,7 @@ namespace NaiveIME
 			return model;
 		}
 
-		public static NGramMixed Load12_Lambda()
+		public static NGramMixed Load12WithCoefficients()
 		{
 			var ng1 = Load<NGram1>();
 			var ng2 = Load<NGram2>();
@@ -94,7 +84,7 @@ namespace NaiveIME
             return model;
 		}
 
-		public static NGramMixed Load123_Lambda()
+		public static NGramMixed Load123WithCoefficients()
 		{
 			var ng1 = Load<NGram1>();
 			var ng2 = Load<NGram2>();
