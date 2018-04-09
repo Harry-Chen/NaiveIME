@@ -28,8 +28,6 @@ namespace NaiveIME
 
         IEnumerable<PinyinToSolve> SubStringSelector(string sentence, string[] pinyins)
         {
-            //return CharPairSelector(str, 3);
-            //return DynamicSubStringSelector(str);
             var builder = new StringBuilder();
             for (int i = 0; i < sentence.Length; ++i)
             {
@@ -51,29 +49,6 @@ namespace NaiveIME
                     yield return str.Substring(i, k);
         }
 
-        //IEnumerable<string> DynamicSubStringSelector(string str)
-        //{
-        //    var builder = new StringBuilder();
-        //    for (int i = 0; i < str.Length; ++i)
-        //    {
-        //        builder.Clear();
-        //        builder.Append(str[i]);
-        //        yield return builder.ToString();
-        //        //for (int j = i + 1; j < str.Length; ++j)
-        //        //{
-        //        //	if (Statistics[builder.ToString()] < Math.Max(5, Total * MinRate))
-        //        //		break;
-        //        //	builder.Append(str[j]);
-        //        //	yield return builder.ToString();
-        //        //}
-        //        for (int j = i + 1; j < Math.Min(str.Length, i + 3); ++j)
-        //        {
-        //            builder.Append(str[j]);
-        //            yield return builder.ToString();
-        //        }
-        //    }
-        //}
-
         public bool InCharSet(char c)
         {
             const char CHINESE_CHAR_MIN = (char)0x4e00;
@@ -83,35 +58,22 @@ namespace NaiveIME
 
         public void Analyze(TextReader reader)
         {
-            var builder = new StringBuilder('^');
+            var builder = new StringBuilder("^");
             while (reader.Peek() != -1)
             {
                 var pinyins = reader.ReadLine().Split(' ');
                 var sentence = reader.ReadLine();
-                if (sentence.Length != pinyins.Length) // pypinyin bugs!!!
-                    continue;
+                if (sentence.Length != pinyins.Length)
+                {
+                    throw new FormatException("拼音字数与句子长度不符合！句子：" + sentence + "，拼音：" + pinyins);
+                }
                 builder.Append(sentence).Append('$');
                 Statistics.Add("*", builder.Length);
                 foreach (var strAndPy in SubStringSelector(builder.ToString(), pinyins))
                     Statistics.Add(strAndPy.Chars + ':' + strAndPy.Pinyin);
                 builder.Clear();
                 builder.Append('^');
-                //var c = (char)reader.Read();
-                //if (!InCharSet(c))
-                //{
-                //	if (builder.Length >= 2)
-                //	{
-                //		builder.Append('$');
-                //		Statistics.Add("*", builder.Length);
-                //		foreach (var str in SubStringSelector(builder.ToString()))
-                //			Statistics.Add(str);
-                //	}
 
-                //	builder.Clear();
-                //	builder.Append('^');
-                //}
-                //else
-                //	builder.Append(c);
             }
         }
         public void Analyze(string str)
