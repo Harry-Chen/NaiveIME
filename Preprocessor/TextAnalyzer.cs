@@ -65,7 +65,7 @@ namespace NaiveIME
                 var sentence = reader.ReadLine();
                 if (sentence.Length != pinyins.Length)
                 {
-                    throw new FormatException("拼音字数与句子长度不符合！句子：" + sentence + "，拼音：" + pinyins);
+                    throw new FormatException("拼音字数与句子长度不符合！句子：" + sentence);
                 }
                 builder.Append(sentence).Append('$');
                 Statistics.Add("*", builder.Length);
