@@ -41,7 +41,7 @@ namespace NaiveIME
 		public static Distribution<string> MixStrategyCoefficient(IEnumerable<Distribution<string>> dtbs)
 		{
 			var dict = new Dictionary<Distribution<string>, float>();
-			float rest = 1, lambda = 0.75f;
+            float rest = 1, lambda = PersistentConfiguration.LambdaRatio;
 			foreach (var dtb in dtbs.Reverse())
 			{
 				dict.Add(dtb, rest * lambda);

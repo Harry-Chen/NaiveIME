@@ -33,8 +33,16 @@ namespace NaiveIME
 				case "2": return Load<NGram2>();
 				case "3": return Load<NGram3>();
 				case "12m": return Load12WithMaxProbability();
-				case "12l": return Load12WithCoefficients();
-				case "123l": return Load123WithCoefficients();
+				case "12l":
+                    {
+                        CheckLambda();
+                        return Load12WithCoefficients();
+                    }
+				case "123l":
+                    {
+                        CheckLambda();
+                        return Load123WithCoefficients();
+                    }
 				default: throw new ArgumentException();
 			}
 		}
@@ -75,10 +83,20 @@ namespace NaiveIME
             return model;
 		}
 
+        private static void CheckLambda()
+        {
+            var lambda = PersistentConfiguration.LambdaRatio;
+            if (lambda <= 0 || lambda >= 1)
+            {
+                throw new ArgumentException("混合参数必须在 (0,1) 之间，目前为 " + lambda);
+            }
+        }
+
 		public static NGramMixed Load12WithCoefficients()
 		{
 			var ng1 = Load<NGram1>();
 			var ng2 = Load<NGram2>();
+
             var model = new NGramMixed(new NGramBase[] { ng1, ng2 })
             {
                 //model.PinyinDict = pydict;

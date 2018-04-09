@@ -7,5 +7,6 @@ namespace NaiveIME
         private static IConfiguration config = new ConfigurationBuilder().AddJsonFile("config.json").Build();
         public static string DefaultPinyinFile => config["DefaultPinyinFile"];
         public static string ModelDirectory => config["ModelDirectory"];
+        public static float LambdaRatio => float.Parse(config["LambdaRatio"]);
     }
 }
