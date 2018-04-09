@@ -17,28 +17,6 @@ namespace NaiveIME
                 TextProcessor.AnalyzeFilesSeparately(opt.FilePaths, opt.OutputDir);
         }
 
-        public static void ConvertDatasetToStatistics(ConvStatOption opt)
-        {
-            if (opt.Merge)
-            {
-                var conv = new DatasetConverter();
-                foreach (var filePath in opt.FilePaths)
-                    conv.Load(filePath, opt.Format);
-                conv.Save(opt.OutputFile);
-            }
-            else
-            {
-                foreach (var filePath in opt.FilePaths)
-                {
-                    var fileInfo = new FileInfo(filePath);
-                    var outFilePath = $"{opt.OutputDir ?? fileInfo.DirectoryName}/{fileInfo.Name}_stat.csv";
-                    var conv = new DatasetConverter();
-                    conv.Load(filePath, opt.Format);
-                    conv.Save(outFilePath);
-                }
-            }
-        }
-
         public static void MergeStatisticsFiles(IEnumerable<string> filePaths, string outputFile, float rate = 0)
         {
             TextProcessor.MinRate = rate;
@@ -68,12 +46,12 @@ namespace NaiveIME
             {
                 PrintDistributeSize = 10,
             };
-            Console.WriteLine($"Using model: {model.GetType().Name}");
+            Console.WriteLine($"Using {inputer.Name}");
 
             while (true)
             {
-                Console.Write("pinyin > ");
-                var input = Console.ReadLine();
+                Console.Write("Pinyin > ");
+                var input = Console.ReadLine().Trim();
                 try
                 {
                     inputer.Clear();
@@ -96,8 +74,8 @@ namespace NaiveIME
 
             while (true)
             {
-                Console.Write("data > ");
-                var input = Console.ReadLine(); // [char]+ [pinyin]
+                Console.Write("Data > ");
+                var input = Console.ReadLine().Trim(); // [char]+ [pinyin]
                 string chars = input.Split()[0];
                 string pinyin = input.Split().ElementAtOrDefault(1);
                 var condition = new PinyinToSolve(chars, pinyin);
@@ -128,8 +106,8 @@ namespace NaiveIME
             var stat = new TextAnalyzer(filePath);
             while (true)
             {
-                Console.Write("stat > ");
-                var input = Console.ReadLine();
+                Console.Write("Statistics > ");
+                var input = Console.ReadLine().Trim();
                 int count = stat.GetStringCount(input);
                 Console.WriteLine(count);
             }
