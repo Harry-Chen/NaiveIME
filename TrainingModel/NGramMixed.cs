@@ -7,7 +7,7 @@ namespace NaiveIME
 {
 	public class NGramMixed : NGramBase
 	{
-		NGramBase[] Models { get; }
+        NGramBase[] Models { get; }
 		public Func<IEnumerable<Distribution<string>>, Distribution<string>> MixDistributeStrategy { get; set; }
 			= MixStrategyMaxN;
 

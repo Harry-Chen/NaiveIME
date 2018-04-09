@@ -11,7 +11,7 @@ namespace NaiveIME
 	{
 		// Shared Property
 		public virtual PinyinConverter PinyinDict { get; set; } = PinyinConverter.INSTANCE;
-	    public string SourceName { get; private set; }
+	    public string SourceName { get; set; }
 
 	    // Abstract Method
 	    public virtual void FromAnalyzer(TextAnalyzer analyzer)

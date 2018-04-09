@@ -56,7 +56,7 @@ namespace NaiveIME
 			    {
 			        var compare = TestSentense(inputer, chinese, pinyins);
 			        Results[inputer].Count(compare);
-                    Console.WriteLine(inputer.Name + ": " + Results[inputer].ToString());
+                    Console.WriteLine(inputer.Name + ":\t" + Results[inputer].ToString());
 			        cmps.Add(inputer, compare);
 			    }
 			    resultWriter?.WriteLine(cmps);
@@ -158,7 +158,7 @@ namespace NaiveIME
 			}
 
 			public override string ToString()
-				=> $"Char accuracy: {MatchRateChar}\tSentence accuracy: {MatchRateSentence}";
+				=> $"Char accuracy: {MatchRateChar} Sentence accuracy: {MatchRateSentence}";
 		}
 	}
 }

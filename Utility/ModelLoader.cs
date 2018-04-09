@@ -67,9 +67,12 @@ namespace NaiveIME
 		{
 			var ng1 = Load<NGram1>();
 			var ng2 = Load<NGram2>();
-			var model = new NGramMixed(new NGramBase[] { ng1, ng2 });
-			//model.PinyinDict = pydict;
-			return model;
+            var model = new NGramMixed(new NGramBase[] { ng1, ng2 })
+            {
+                SourceName = "12m"
+            };
+            //model.PinyinDict = pydict;
+            return model;
 		}
 
 		public static NGramMixed Load12WithCoefficients()
@@ -79,7 +82,8 @@ namespace NaiveIME
             var model = new NGramMixed(new NGramBase[] { ng1, ng2 })
             {
                 //model.PinyinDict = pydict;
-                MixDistributeStrategy = NGramMixed.MixStrategyCoefficient
+                MixDistributeStrategy = NGramMixed.MixStrategyCoefficient,
+                SourceName = "12l"
             };
             return model;
 		}
@@ -92,7 +96,8 @@ namespace NaiveIME
             var model = new NGramMixed(new NGramBase[] { ng1, ng2, ng3 })
             {
                 //model.PinyinDict = pydict;
-                MixDistributeStrategy = NGramMixed.MixStrategyCoefficient
+                MixDistributeStrategy = NGramMixed.MixStrategyCoefficient,
+                SourceName = "123l"
             };
             return model;
 		}
