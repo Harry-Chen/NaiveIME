@@ -9,7 +9,7 @@ namespace NaiveIME
     /// </summary>
     public class NGramInputMethod : SingleCharInputMethod
     {
-        public override string Name => $"NGramInputMethod using [{Model.GetType().Name}] [{Model.SourceName}]";
+        public override string Name => $"[{Model.GetType().Name}] [{Model.SourceName}]";
         NGramBase Model { get; }
         Distribution<string> distribution = Distribution<string>.Single("");
         List<string> goodResults = new List<string>();
