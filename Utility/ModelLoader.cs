@@ -10,7 +10,7 @@ namespace NaiveIME
 	{
 		static string GetPath(Type type)
 		{
-			return $"{PersistentConfiguration.ModelDirectory}{type.Name}.txt";
+			return Path.Combine(PersistentConfiguration.ModelDirectory, $"{type.Name}.txt");
 		}
 
 		public static NGramBase NewByName(string modelName)
@@ -51,9 +51,10 @@ namespace NaiveIME
 			where TModel: NGramBase
 		{
 			TModel model;
-			using (var fileReader = File.OpenText(GetPath(typeof(TModel))))
+            var modelPath = GetPath(typeof(TModel));
+            using (var fileReader = File.OpenText(modelPath))
 			{
-				Console.WriteLine($"Loading {typeof(TModel).Name} from file...");
+				Console.WriteLine($"Loading {typeof(TModel).Name} from {modelPath}...");
 				model = new JsonSerializer().Deserialize<TModel>(new JsonTextReader(fileReader));
 				Console.WriteLine($"Success.");
 			}
