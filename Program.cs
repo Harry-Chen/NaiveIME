@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.IO;
+using System.Collections.Generic;
 using CommandLine;
 
 namespace NaiveIME
@@ -100,8 +102,43 @@ namespace NaiveIME
 
     class Program
     {
+        private static void CheckConfiguration()
+        {
+            Console.WriteLine("----- Checking Configuration File -----");
+            var lambda = PersistentConfiguration.LambdaRatio;
+            if (lambda <= 0 || lambda >= 1)
+            {
+                throw new ArgumentException($"Mixing ratio must be in (0,1), not {lambda}");
+            }
+            else
+            {
+                Console.WriteLine($"Mixing Ratio: {lambda}");
+            }
+            var modelPath = PersistentConfiguration.ModelDirectory;
+            if (!Directory.Exists(modelPath))
+            {
+                throw new FileNotFoundException($"Model directory \"{modelPath}\" does not exist");
+            }
+            else
+            {
+                Console.WriteLine($"Model directory: {modelPath}");
+            }
+            var takeSize = PersistentConfiguration.CandidatesEachStep;
+            if (takeSize <= 0)
+            {
+                throw new FileNotFoundException($"Candidates taken must be positive, not {takeSize}");
+            }
+            else
+            {
+                Console.WriteLine($"Numbers of candidate taken each step: {takeSize}");
+
+            }
+            Console.WriteLine("----- Done Checking Configuration -----\n");
+
+        }
         static void Main(string[] args)
         {
+            CheckConfiguration();
             var result = CommandLine.Parser.Default.ParseArguments
                                     <QSolveOption, QModelOption, QStatOption, SolveFromFileOption, AnalyzeOption, MergeOption, BuildOption, TestOption>(args);
             result.WithParsed<QSolveOption>(opt => Command.InteractiveSolve(opt.ModelName))

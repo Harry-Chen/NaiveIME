@@ -44,7 +44,7 @@ namespace NaiveIME
             NGramBase model = ModelLoader.LoadByName(modelName);
             var inputer = new NGramInputMethod(model)
             {
-                PrintDistributeSize = 10,
+                PrintDistributeSize = PersistentConfiguration.CandidatesEachStep,
             };
             Console.WriteLine($"Using {inputer.Name}");
 

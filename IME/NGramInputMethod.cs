@@ -13,7 +13,7 @@ namespace NaiveIME
         NGramBase Model { get; }
         Distribution<string> distribution = Distribution<string>.Single("");
         List<string> goodResults = new List<string>();
-        public int TakeSize { get; set; } = 10;
+        public int TakeSize { get; set; } = PersistentConfiguration.CandidatesEachStep;
 
         public bool TraceDistribute { get; set; } = false;
         public bool MakeGoodResults { get; set; } = false;
