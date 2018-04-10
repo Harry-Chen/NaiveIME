@@ -9,7 +9,6 @@ namespace NaiveIME
     public class InputMethodTester
     {
         SingleCharInputMethod[] Methods { get; set; }
-        PinyinConverter PinyinDict = PinyinConverter.INSTANCE;
         public Dictionary<SingleCharInputMethod, AccuracyCounter> Results { get; }
         int PrintToConsoleAfter { get; } = 10;
 

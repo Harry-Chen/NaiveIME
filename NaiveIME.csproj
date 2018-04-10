@@ -88,7 +88,6 @@
     <Compile Include="Types\PinyinToSolve.cs" />
     <Compile Include="Types\Distribution.cs" />
     <Compile Include="Utility\PersistentConfiguration.cs" />
-    <Compile Include="Utility\PinyinConverter.cs" />
     <Compile Include="Types\FrequencyStatistics.cs" />
     <Compile Include="Utility\SystemTypeExtensions.cs" />
     <Compile Include="Utility\Command.cs" />

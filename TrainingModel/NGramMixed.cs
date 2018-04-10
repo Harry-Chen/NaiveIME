@@ -11,16 +11,6 @@ namespace NaiveIME
 		public Func<IEnumerable<Distribution<string>>, Distribution<string>> MixDistributeStrategy { get; set; }
 			= MixStrategyMaxN;
 
-		public override PinyinConverter PinyinDict
-		{
-			set
-			{
-				base.PinyinDict = value;
-				foreach(var ng in Models)
-					ng.PinyinDict = value;
-			}
-		}
-
 		public NGramMixed(params NGramBase[] models)
 		{
 			Models = models;

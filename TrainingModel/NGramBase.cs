@@ -10,7 +10,6 @@ namespace NaiveIME
 	public abstract class NGramBase
 	{
 		// Shared Property
-		public virtual PinyinConverter PinyinDict { get; set; } = PinyinConverter.INSTANCE;
 	    public string SourceName { get; set; }
 
 	    // Abstract Method
