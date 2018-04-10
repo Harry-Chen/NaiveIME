@@ -18,17 +18,17 @@ namespace NaiveIME
             Results = Methods.ToDictionary(key => key, value => new AccuracyCounter(value.Name));
         }
 
-        public SentenceCompareResult TestSentense(SingleCharInputMethod inputer, string sentense, IEnumerable<string> pinyins)
+        public SentenceCompareResult TestSentense(SingleCharInputMethod method, string sentense, IEnumerable<string> pinyins)
         {
             string result = "";
             try
             {
-                inputer.Clear();
+                method.Clear();
                 foreach (var pinyin in pinyins)
                 {
-                    inputer.Input(pinyin);
+                    method.Input(pinyin);
                 }
-                result = inputer.Results.First();
+                result = method.Results.First();
             }
             catch (Exception e)
             {

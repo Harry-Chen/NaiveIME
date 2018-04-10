@@ -18,7 +18,6 @@ namespace NaiveIME
                 case "1": return new NGram1();
                 case "2": return new NGram2();
                 case "3": return new NGram3();
-                //case "n": return new NGramN();
                 default: throw new ArgumentException();
             }
         }
@@ -70,7 +69,6 @@ namespace NaiveIME
             {
                 SourceName = "12m"
             };
-            //model.PinyinDict = pydict;
             return model;
         }
 
@@ -82,7 +80,6 @@ namespace NaiveIME
 
             var model = new NGramMixed(new NGramBase[] { ng1, ng2 })
             {
-                //model.PinyinDict = pydict;
                 MixDistributeStrategy = NGramMixed.MixStrategyCoefficient,
                 SourceName = "12l"
             };
@@ -96,7 +93,6 @@ namespace NaiveIME
             var ng3 = Load<NGram3>();
             var model = new NGramMixed(new NGramBase[] { ng1, ng2, ng3 })
             {
-                //model.PinyinDict = pydict;
                 MixDistributeStrategy = NGramMixed.MixStrategyCoefficient,
                 SourceName = "123l"
             };
