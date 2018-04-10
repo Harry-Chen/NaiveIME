@@ -91,7 +91,7 @@
     <Compile Include="Types\FrequencyStatistics.cs" />
     <Compile Include="Utility\SystemTypeExtensions.cs" />
     <Compile Include="Utility\Command.cs" />
-    <Compile Include="Utility\InputerTester.cs" />
+    <Compile Include="Utility\InputMethodTester.cs" />
     <Compile Include="IME\SingleCharInputMethod.cs" />
     <Compile Include="IME\IInputMethod.cs" />
     <Compile Include="IME\NGramInputMethod.cs" />
@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

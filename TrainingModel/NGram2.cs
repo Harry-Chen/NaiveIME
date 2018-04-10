@@ -1,13 +1,10 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NaiveIME
 {
-	public class NGram2: NGramBase
+    public class NGram2: NGramBase
 	{
 		[JsonProperty]
 		Dictionary<char, Distribution<string>> dict = new Dictionary<char, Distribution<string>>();

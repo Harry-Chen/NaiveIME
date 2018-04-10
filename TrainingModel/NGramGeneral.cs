@@ -1,16 +1,14 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NaiveIME
 {
-	/// <summary>
-	/// 用字典实现的通用N-Gram模型
-	/// </summary>
-	public class NGramGeneral: NGramBase
+    /// <summary>
+    /// 用字典实现的通用N-Gram模型
+    /// </summary>
+    public class NGramGeneral: NGramBase
 	{
 		[JsonProperty]
 		public int N { get; }

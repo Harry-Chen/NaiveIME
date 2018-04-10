@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NaiveIME
 {
-	public static class StringExtension
+    public static class StringExtension
 	{
 		public static string LastSubString(this string str, int lastn, char space = ' ')
 		{

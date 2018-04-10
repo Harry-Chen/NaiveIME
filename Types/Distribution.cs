@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace NaiveIME
 {
-	[Serializable, JsonObject(MemberSerialization.OptIn)]
+    [Serializable, JsonObject(MemberSerialization.OptIn)]
 	public class Distribution<T>
 	{
 		[JsonProperty("dict")]

@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace NaiveIME
 {
-	public class NGramMixed : NGramBase
+    public class NGramMixed : NGramBase
 	{
         NGramBase[] Models { get; }
 		public Func<IEnumerable<Distribution<string>>, Distribution<string>> MixDistributeStrategy { get; set; }

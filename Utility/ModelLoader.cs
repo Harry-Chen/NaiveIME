@@ -1,8 +1,6 @@
+using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Configuration;
 
 namespace NaiveIME
 {

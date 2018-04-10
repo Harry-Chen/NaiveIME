@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using CommandLine;
+using System;
 using System.Collections.Generic;
-using CommandLine;
+using System.IO;
 
 namespace NaiveIME
 {

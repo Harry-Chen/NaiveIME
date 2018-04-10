@@ -1,11 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 
 namespace NaiveIME
 {
-	public static class TextProcessor
+    public static class TextProcessor
 	{
 	    public static float MinRate { get; set; } = 1e-6f;
 	    public static string Strategy { get; set; } = "n";

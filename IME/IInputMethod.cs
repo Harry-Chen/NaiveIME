@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NaiveIME
 {
-	public interface IInputMethod
+    public interface IInputMethod
 	{
 	    string Name { get; }
 
