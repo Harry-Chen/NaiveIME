@@ -105,7 +105,6 @@
     <Compile Include="Utility\ModelLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Preprocessor\DatasetConverter.cs" />
     <Compile Include="Preprocessor\TextProcessor.cs" />
     <Compile Include="Preprocessor\TextAnalyzer.cs" />
   </ItemGroup>
