@@ -138,18 +138,26 @@ namespace NaiveIME
         }
         static void Main(string[] args)
         {
-            CheckConfiguration();
-            var result = CommandLine.Parser.Default.ParseArguments
-                                    <QSolveOption, QModelOption, QStatOption, SolveFromFileOption, AnalyzeOption, MergeOption, BuildOption, TestOption>(args);
-            result.WithParsed<QSolveOption>(opt => Command.InteractiveSolve(opt.ModelName))
-                  .WithParsed<QModelOption>(opt => Command.QueryModel())
-                  .WithParsed<QStatOption>(opt => Command.QueryStatistics(opt.FilePath))
-                  .WithParsed<SolveFromFileOption>(opt => Command.SolveFromFile(opt.InputFile, opt.OutputFile, opt.ModelName))
-                  .WithParsed<AnalyzeOption>(opt => Command.AnalyzeRawTextFiles(opt))
-                  .WithParsed<MergeOption>(opt => Command.MergeStatisticsFiles(opt.FilePaths, opt.OutputFile, opt.MinRate))
-                  .WithParsed<BuildOption>(opt => Command.BuildModel(opt.StatFile, opt.ModelNames))
-                  .WithParsed<TestOption>(opt => Command.TestOnData(opt));
-
+            try
+            {
+                CheckConfiguration();
+                var result = CommandLine.Parser.Default.ParseArguments
+                                        <QSolveOption, QModelOption, QStatOption, SolveFromFileOption, AnalyzeOption, MergeOption, BuildOption, TestOption>(args);
+                result.WithParsed<QSolveOption>(opt => Command.InteractiveSolve(opt.ModelName))
+                      .WithParsed<QModelOption>(opt => Command.QueryModel())
+                      .WithParsed<QStatOption>(opt => Command.QueryStatistics(opt.FilePath))
+                      .WithParsed<SolveFromFileOption>(opt => Command.SolveFromFile(opt.InputFile, opt.OutputFile, opt.ModelName))
+                      .WithParsed<AnalyzeOption>(opt => Command.AnalyzeRawTextFiles(opt))
+                      .WithParsed<MergeOption>(opt => Command.MergeStatisticsFiles(opt.FilePaths, opt.OutputFile, opt.MinRate))
+                      .WithParsed<BuildOption>(opt => Command.BuildModel(opt.StatFile, opt.ModelNames))
+                      .WithParsed<TestOption>(opt => Command.TestOnData(opt));
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine("Error occurred, will exit now");
+                Console.Error.WriteLine(e.ToString());
+                System.Environment.Exit(233);
+            }
         }
     }
 }

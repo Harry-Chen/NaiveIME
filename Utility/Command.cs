@@ -23,46 +23,70 @@ namespace NaiveIME
             TextProcessor.MergeFiles(filePaths, outputFile);
         }
 
+        private static void SolveAndWritePinyin(string[] pinyins, NGramInputMethod method, TextWriter writer)
+        {
+            try
+            {
+                foreach (string pinyin in pinyins)
+                    method.Input(pinyin);
+            }
+            catch (InvalidOperationException e)
+            {
+                e.ToString(); // make compiler happy
+                Console.Error.WriteLine("在翻译\"" + string.Join(" ",pinyins) + "\"时发生错误，未能获取完整结果");
+                var bestAnswer = method.NowBestAnswer;
+                if (bestAnswer != null)
+                {
+                    writer.WriteLine(bestAnswer + new string('？', pinyins.Length - bestAnswer.Length));
+                }
+                return;
+            }
+            writer.WriteLine(method.Results.First());
+        }
+
         public static void SolveFromFile(string inputFile, string outputFile, string modelName)
         {
             var model = ModelLoader.LoadByName(modelName);
-            var inputer = new NGramInputMethod(model);
+            var method = new NGramInputMethod(model);
             using (var outputWriter = File.CreateText(outputFile))
             {
+                var lineCount = 0;
                 foreach (string input in File.ReadLines(inputFile))
                 {
-                    inputer.Clear();
-                    foreach (string pinyin in input.Split())
-                        inputer.Input(pinyin);
-                    outputWriter.WriteLine(inputer.Results.First());
+                    method.Clear();
+                    var pinyins = input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    SolveAndWritePinyin(pinyins, method, outputWriter);
+                    ++lineCount;
+                    if(lineCount % 10 == 0)
+                    {
+                        Console.Error.WriteLine($"Converted {lineCount} lines");
+                    }
                 }
+                Console.Error.WriteLine($"Done converting pinyin, {lineCount} lines in total.");
             }
         }
 
         public static void InteractiveSolve(string modelName)
         {
             NGramBase model = ModelLoader.LoadByName(modelName);
-            var inputer = new NGramInputMethod(model)
+            var method = new NGramInputMethod(model)
             {
                 PrintDistributeSize = PersistentConfiguration.CandidatesEachStep,
             };
-            Console.WriteLine($"Using {inputer.Name}");
+            Console.WriteLine($"Using {method.Name}");
 
             while (true)
             {
                 Console.Write("Pinyin > ");
-                var input = Console.ReadLine().Trim();
-                try
+                var raw = Console.ReadLine();
+                if (raw == null)
                 {
-                    inputer.Clear();
-                    foreach (string pinyin in input.Split())
-                        inputer.Input(pinyin);
-                    Console.WriteLine(inputer.Results.First());
+                    break;
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+                var input = raw.Trim();
+                method.Clear();
+                var pinyins = input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                SolveAndWritePinyin(pinyins, method, Console.Out);
             }
         }
 
@@ -128,7 +152,7 @@ namespace NaiveIME
         {
             IEnumerable<NGramBase> models;
             models = opt.ModelNames.Select(ModelLoader.LoadByName);
-            var inputers = models.Select(model => new NGramInputMethod(model)).Cast<SingleCharInputMethod >().ToArray();
+            var inputers = models.Select(model => new NGramInputMethod(model)).Cast<SingleCharInputMethod>().ToArray();
             var tester = new InputMethodTester(inputers);
 
             using (var inputFile = File.OpenText(opt.InputFile))

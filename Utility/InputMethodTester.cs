@@ -18,7 +18,7 @@ namespace NaiveIME
             Results = Methods.ToDictionary(key => key, value => new AccuracyCounter(value.Name));
         }
 
-        public SentenceCompareResult TestSentense(SingleCharInputMethod method, string sentense, IEnumerable<string> pinyins)
+        public SentenceCompareResult TestSentence(SingleCharInputMethod method, string sentense, IEnumerable<string> pinyins)
         {
             string result = "";
             try
@@ -30,16 +30,17 @@ namespace NaiveIME
                 }
                 result = method.Results.First();
             }
-            catch (Exception e)
+            catch (InvalidOperationException e)
             {
                 Console.WriteLine(e.Message);
+                result = method.NowBestAnswer;
             }
             return new SentenceCompareResult(sentense, result);
         }
 
         public void TestData(TextReader reader, TextWriter resultWriter = null)
         {
-            resultWriter?.WriteLine("----- Inputer Test Report -----");
+            resultWriter?.WriteLine("------- IME Test Report -------");
             for (int i = 0; i < Methods.Length; ++i)
                 resultWriter?.WriteLine($"No.{i}: {Methods[i].Name}");
             resultWriter?.WriteLine("-------------------------------");
@@ -51,12 +52,12 @@ namespace NaiveIME
                 pinyins = reader.ReadLine().Trim().ToLower().Split(' ');
                 chinese = reader.ReadLine().Trim();
                 var cmps = new SentenceCompareResults(chinese);
-                foreach (var inputer in Methods)
+                foreach (var method in Methods)
                 {
-                    var compare = TestSentense(inputer, chinese, pinyins);
-                    Results[inputer].Count(compare);
-                    Console.WriteLine(Results[inputer].ToString());
-                    cmps.Add(inputer, compare);
+                    var compare = TestSentence(method, chinese, pinyins);
+                    Results[method].Count(compare);
+                    Console.WriteLine(Results[method].ToString());
+                    cmps.Add(method, compare);
                 }
                 resultWriter?.WriteLine(cmps);
 

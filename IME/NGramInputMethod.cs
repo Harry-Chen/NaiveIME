@@ -31,6 +31,10 @@ namespace NaiveIME
         public override IEnumerable<string> SubResult
             => goodResults.Reverse<string>();
 
+        private string longestAnswer;
+
+        public override string NowBestAnswer => longestAnswer;
+
         public override void Clear()
         {
             base.Clear();
@@ -47,6 +51,7 @@ namespace NaiveIME
                         .Select(result => str + result.Substring(0, 1)))
                     .Take(TakeSize)
                     .Norm();
+
             if (MakeGoodResults)
                 goodResults.AddRange(distribution.KeyProbDescending
                                              .TakeWhile(pair => pair.Value > 0.2)
@@ -56,6 +61,8 @@ namespace NaiveIME
                 Distributions.Add(distribution);
             if (PrintDistributeSize > 0)
                 distribution.Take(PrintDistributeSize).Print();
+
+            longestAnswer = distribution.KeyProbDescending.First().Key;
         }
 
         public override void ConfirmSubResult(int index)

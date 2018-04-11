@@ -10,7 +10,8 @@ namespace NaiveIME
 	{
 		public abstract IEnumerable<string> Results { get; }
 		public abstract IEnumerable<string> SubResult { get; }
-		public abstract void Input(string pinyin);
+        public abstract string NowBestAnswer { get; }
+        public abstract void Input(string pinyin);
 		public abstract void ConfirmSubResult(int index);
 
 		public string InputString { get; private set; }

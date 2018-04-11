@@ -14,6 +14,8 @@ namespace NaiveIME
 
 		IEnumerable<string> Results { get;}
 
+        string NowBestAnswer { get; }
+
         // below: for future use
 		IEnumerable<string> SubResult { get; }
 		void ConfirmSubResult(int index);
